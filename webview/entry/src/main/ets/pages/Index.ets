@@ -36,7 +36,7 @@ struct Index {
   }
 
   build() {
-    Tabs({ barPosition: BarPosition.End }) {
+    Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {
       TabContent() {
         QuickStartPage()
       }

@@ -4,6 +4,7 @@ import { ArticleClass } from '../model/ArticleClass';
 @Component
 export struct TutorialView {
   @State tutorialList: ArticleClass[] = [];
+  @Consume('articlePathStack') articlePathStack: NavPathStack;
 
   aboutToAppear(): void {
     this.getTutorialDataFromJSON()
@@ -30,6 +31,9 @@ export struct TutorialView {
         ForEach(this.tutorialList, (item: ArticleClass) => {
           ListItem() {
             TutorialItem({ tutorialItem: item })
+              .onClick(() => {
+                this.articlePathStack.pushPathByName('articleDetail', item)
+              })
           }
         }, (item: ArticleClass) => item.id)
       }

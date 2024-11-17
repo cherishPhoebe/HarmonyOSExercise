@@ -4,6 +4,7 @@ import { bufferToString } from '../util/BufferUtil';
 @Component
 export struct Banner {
   @State bannerList: BannerClass[] = [];
+  @Consume('articlePathStack') articlePathStack: NavPathStack;
 
   aboutToAppear(): void {
     this.getBannerDataFromJSON()
@@ -23,7 +24,9 @@ export struct Banner {
           .width('100%')
           .borderRadius(16)
           .padding({ top: 11, left: 16, right: 16 })
-
+          .onClick(() => {
+            this.articlePathStack.pushPathByName('bannerDetail', item);
+          })
       }, (item: BannerClass) => item.id)
     }
     .autoPlay(true)

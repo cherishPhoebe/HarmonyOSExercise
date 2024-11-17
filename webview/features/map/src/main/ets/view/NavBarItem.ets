@@ -4,13 +4,15 @@ export interface NavBarItemType {
 }
 
 @Component
-export struct NavBarItem{
+export struct NavBarItem {
+  @Consume('knowledgeMapPageStack') knowledgeMapPageStack: NavPathStack;
   @Prop navBarItem: NavBarItemType;
+  @Link currentNavBarIndex: number;
 
   build() {
-    Row(){
+    Row() {
       Text(this.navBarItem.order)
-        .margin({right:6})
+        .margin({ right: 6 })
         .fontFamily('HarmonyHeiTi-Bold')
         .fontSize(21)
         .fontColor('#182431')
@@ -38,7 +40,12 @@ export struct NavBarItem{
     .height(48)
     .borderRadius(16)
     .alignItems(VerticalAlign.Center)
-    .padding({left: 12,right:12})
-    .backgroundColor('#F1F3F5')
+    .padding({ left: 12, right: 12 })
+    .backgroundColor(this.currentNavBarIndex === Number(this.navBarItem.order) - 1 ? '#F1F3F5' : Color.Transparent)
+    .onClick(() => {
+      const index = Number(this.navBarItem.order) - 1;
+      this.currentNavBarIndex = index;
+      this.knowledgeMapPageStack.replacePath({ name: 'KnowledgeMapContent' })
+    })
   }
 }
